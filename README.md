@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+Prorating Subscriptions
+Background
+Our company has started selling to larger customers, so we are creating subscription tiers with different feature sets to cater to our customers’ unique needs. We previously charged every customer a flat fee per month, but now we plan on charging for the number of users active on the customer's subscription plan. As a result, we're changing our billing system.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Instructions
+You’ve picked up the work item to implement the logic to compute the monthly charge:
+Prorating Subscriptions (#8675309)
+We'd like you to implement a monthlyCharge function to calculate the total monthly bill for a customer.
 
-## Available Scripts
+Customers are billed based on their subscription tier. We charge them a prorated amount for the portion of the month each user’s subscription was active. For example, if a user was activated or deactivated part way through the month, then we charge them only for the days their subscription was active.
 
-In the project directory, you can run:
+We want to bill customers for all days users were active in the month (including any activation and deactivation dates, since the user had some access on those days).
 
-### `npm start`
+Notes
+Here’s an idea of how we might go about this:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Calculate a daily rate for the subscription tier
+For each day of the month, identify which users had an active subscription on that day
+Multiply the number of active users for the day by the daily rate to calculate the total for the day
+Return the running total for the month at the end
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Testing
+For some examples showing the calculation in action, see the provided unit tests. The provided tests only cover a few cases, so you should plan to add your own tests to ensure that your solution handles any edge cases. You should be able to follow the existing patterns for naming and constructing tests to add your own.
 
-### `npm test`
+Notes
+It’s more important for the return value to be correct than it is for the algorithm to be highly optimized.
+You can store intermediate results as any kind of decimal type (e.g. float, double). You do not need to round values until the last step.
+You should not change function names or return types of the provided functions since our test cases depend on those not changing.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+Chai Testing Suite
+let assert = require('chai').assert;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+const users = [
+  {
+    id: 1,
+    name: 'Employee #1',
+    activatedOn: new Date('2019-01-01'),
+    deactivatedOn: null,
+    customerId: 1,
+  },
+  {
+    id: 2,
+    name: 'Employee #2',
+    activatedOn: new Date('2019-01-01'),
+    deactivatedOn: null,
+    customerId: 1,
+  },
+];
